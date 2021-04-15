@@ -1,0 +1,11 @@
+*.csv
+*.dat
+*.iml
+*.log
+*.pid
+*.seed
+*.swo
+*.swp
+*.tgz
+*.xml
+*.env
