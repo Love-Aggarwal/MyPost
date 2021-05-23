@@ -1,4 +1,7 @@
 {% extends "blog/base.html" %}
+{% block title %}
+    Post Detail  - {{ block.super }}
+{% endblock %}
 {% block content %}
 <div class="jumbotron mt-3 shadow-lg">
 <article class="media content-section shadow ">
@@ -44,4 +47,25 @@
       <p class="article-content">{{ object.content }}</p>
     </div>
   </article>
+  <hr>
+  {% for comment in post.comments.all %}
+  {% if user.is_authenticated or comment.approved_comment %}
+  <div class="comment">
+      <div class="date">
+          {{ comment.created_date }}
+          {% if not comment.approved_comment and user.is_superuser %}
+        
+              <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove" style="color:blue" >x</span></a>
+              <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok" style="color:blue">OK</span></a>
+          {% endif %}
+      </div>
+      <strong>{{ comment.author }}</strong>
+      <p>{{ comment.text }}</p>
+  </div>
+  {% endif %}
+
+{% empty %}
+  <p>No comments here yet :(</p>
+{% endfor %}
+  
 {% endblock content %}

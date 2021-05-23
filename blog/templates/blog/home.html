@@ -1,7 +1,10 @@
 {% extends "blog/base.html" %}
+{% block title %}
+    Home  - {{ block.super }}
+{% endblock %}
 {% block content %}
     {% for post in posts %}
-      <div class="jumbotron mt-3 bg-white shadow-lg">
+      <div class="jumbotron mt-3 bg-light shadow-lg">
       <article class="media content-section shadow">
         <a href="{{ post.author.profile.image.url }} " target="_blank"> <img src="{{ post.author.profile.image.url }}  " alt="" class="article-img rounded-circle img-thumbnail img-fluid shadow">
         </a>
@@ -23,12 +26,37 @@
           <div class="form-group mt-0 pt-0  m-2">          
             <a class="btn btn-outline-primary  btn-d "  href="{{ post.file.url }}"  download type="submit"><i class="fas fa-download"></i></a>
           </div>
+         
           {% endif %}
         
           </div>
       
         </div>
       </article>
+      <a href="#" onClick="document.getElementById('likebutton').submit()"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a> {{eachpost.likes}}   |   <a href="#" onClick="document.getElementById('dislikebutton').submit()"><i class="fa fa-thumbs-down" aria-hidden="true"></i></a> {{eachpost.dislikes}}
+
+
+      <form id="likebutton" method="POST" action="/posts/{{post.id}}/preference/1/">
+      {% csrf_token %}
+      <input type="hidden">
+      </form>
+      
+      <form id="dislikebutton" method="POST" action="/posts/{{post.id}}/preference/2/">
+      {% csrf_token %}
+      <input type="hidden">
+      </form>
+   
+      <!-- {% for post in Post %}
+        <div class="post">
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
+            <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+        </div>
+    {% endfor %} -->
+    <a class="btn btn-outline-info" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
       </div>   
     {% endfor %}
     {% if is_paginated %}

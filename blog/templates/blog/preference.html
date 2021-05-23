@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+{% block title %}
+    Preference  - {{ block.super }}
+{% endblock %}
+{% block content %}
+    
+        {% if pref == 1 %}
+        <h1>Thanks for your Preference:Like</h1>
+        {% endif %}
+        {% if pref != 1 %}
+        <h1>I will try my best to covert Dislike to Like</h1>
+        {% endif %}
+
+    </h1>
+{% endblock content %}
