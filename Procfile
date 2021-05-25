@@ -1,1 +1,1 @@
-web: gunicorn django_web_App.wsgi 
+web: python manage.py collectstatic --no-input; gunicorn django_web_app.wsgi --log-file - --log-level debug
